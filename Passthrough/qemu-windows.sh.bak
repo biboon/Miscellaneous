@@ -1,0 +1,15 @@
+qemu-system-x86_64 -enable-kvm -m 2048 -cpu host,kvm=off \
+-smp 6,sockets=1,cores=3,threads=2 \
+-device vfio-pci,host=01:00.0,x-vga=on -device vfio-pci,host=01:00.1 \
+-drive if=pflash,format=raw,readonly,file=/usr/share/ovmf/x64/ovmf_code_x64.bin \
+#-drive if=pflash,format=raw,file=/usr/share/ovmf/x64/ovmf_vars_x64.bin \
+-vga none
+#\
+#-drive file=/dev/sda,id=disk,format=raw,aio=native,cache=none,if=none \
+#-device ide-hd,bus=ide.1,drive=disk \
+#-boot order=dc \
+#\
+#-soundhw hda \
+#\
+#-drive file=/home/biboon/Documents/ISOs/en_windows_10_education_n_x64_dvd_6847236.iso,id=virtiocd,if=none \
+#-device ide-cd,bus=ide.1,drive=virtiocd
