@@ -17,6 +17,7 @@ qemu-system-x86_64 -enable-kvm -name windows \
 -drive if=pflash,format=raw,readonly,file=/usr/share/ovmf/x64/ovmf_code_x64.bin \
 -drive if=pflash,format=raw,file=/usr/share/ovmf/x64/ovmf_vars_x64.bin \
 -drive file=$QEMU_HDD,format=raw,index=0,media=disk \
+-netdev user,id=user.0 -device e1000,netdev=user.0 \
 -boot order=c -vga none -nographic \
 \
 -rtc base=localtime -k fr \
