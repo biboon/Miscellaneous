@@ -6,13 +6,13 @@ then
 fi
 
 echo "Starting virtual machine"
-export QEMU_PA_SAMPLES=128
-export QEMU_AUDIO_DRV=pa
+# export QEMU_PA_SAMPLES=128
+# export QEMU_AUDIO_DRV=alsa
 QEMU_HDD=/dev/disk/by-id/ata-SSD9SC120GEDA_PNY1210A00013166
 
 qemu-system-x86_64 -enable-kvm -name windows \
 -cpu host,kvm=off -smp sockets=1,cores=3,threads=2 -m 8G \
--device vfio-pci,host=01:00.0 \
+-device vfio-pci,host=01:00.0,multifunction=on \
 -device vfio-pci,host=01:00.1 \
 -usbdevice host:2516:0011 \
 -usbdevice host:1e7d:2d50 \
