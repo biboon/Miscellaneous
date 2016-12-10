@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "Starting virtual machine"
 # export QEMU_PA_SAMPLES=128
 # export QEMU_AUDIO_DRV=pa
@@ -5,6 +6,12 @@ QEMU_HDD=/dev/disk/by-id/ata-SSD9SC120GEDA_PNY1210A00013166
 OVMF=/usr/share/ovmf/x64/ovmf_code_x64.bin
 OVMF_VARS=/usr/share/ovmf/x64/ovmf_vars_x64.bin
 
+# Disable primary screen and set the second screen primary
+xrandr \
+--output HDMI-1 --off \
+--output HDMI-2 --mode 1920x1080 --pos 0x0 --rotate normal --primary
+
+# Run the VM
 sudo \
 qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 -machine pc,accel=kvm,kernel_irqchip=on,mem-merge=off \
@@ -22,6 +29,11 @@ qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 -nodefaults -serial none -parallel none \
 -nodefconfig -no-user-config \
 -localtime -k fr
+
+# Restore first screen as primary and the second screen as secondary
+xrandr \
+--output HDMI-1 --mode 2560x1440 --pos 0x0 --rotate normal --primary \
+--output HDMI-2 --mode 1920x1080 --pos 2560x0 --rotate normal
 
 echo "Virtual machine stopped"
 exit 0
