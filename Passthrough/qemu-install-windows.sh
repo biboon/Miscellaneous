@@ -23,19 +23,20 @@ qemu-system-x86_64 -enable-kvm -name windows \
 
 echo "Virtual machine stopped"
 exit 0
+
+# Pass this first
+# -boot order=dc \
+# -drive if=none,format=raw,file=$INSTALL_ISO,id=drive \
+# -device ide-cd,bus=ide.1,drive=drive \
+# -drive if=none,format=raw,file=$VIRTIO_ISO,id=virtiodriver \
+# -device ide-cd,bus=ide.2,drive=virtiodriver
+
+# Then rerun the VM with GPU
+# -boot order=c \
+# -device vfio-pci,host=01:00.0,multifunction=on \
+# -device vfio-pci,host=01:00.1
+
 # -vga none -nographic \
 # -rtc base=localtime -k fr \
 # -nodefaults -serial none -parallel none \
 # -nodefconfig -no-user-config -vnc :1
-
-# Pass this first
-# -boot order=dc
-# -drive if=none,format=raw,file=$INSTALL_ISO,id=drive \
-# -device ide-cd,bus=ide.1,drive=drive \
-# -drive if=none,format=raw,file=$VIRTIO_ISO,id=virtiodriver \
-# -device ide-cd,bus=ide.2,drive=virtiodriver \
-
-# Then rerun the VM with GPU
-# -boot order=c
-# -device vfio-pci,host=01:00.0,multifunction=on \
-# -device vfio-pci,host=01:00.1 \

@@ -1,7 +1,6 @@
 #!/bin/bash
 echo "Starting virtual machine"
-# export QEMU_PA_SAMPLES=128
-# export QEMU_AUDIO_DRV=pa
+export QEMU_AUDIO_DRV=alsa
 QEMU_HDD=/dev/disk/by-id/ata-SSD9SC120GEDA_PNY1210A00013166
 OVMF=/usr/share/ovmf/x64/ovmf_code_x64.bin
 OVMF_VARS=/usr/share/ovmf/x64/ovmf_vars_x64.bin
@@ -24,7 +23,7 @@ qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 -drive if=pflash,format=raw,file=$OVMF_VARS \
 -usbdevice host:2516:0011 \
 -usbdevice host:1e7d:2d50 \
--vga none -nographic \
+-vga none -nographic -soundhw hda \
 \
 -nodefaults -serial none -parallel none \
 -nodefconfig -no-user-config \
@@ -33,7 +32,7 @@ qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 # Restore first screen as primary and the second screen as secondary
 xrandr \
 --output HDMI-1 --mode 2560x1440 --pos 0x0 --rotate normal --primary \
---output HDMI-2 --mode 1920x1080 --pos 2560x0 --rotate normal
+--output HDMI-2 --off
 
 echo "Virtual machine stopped"
 exit 0
