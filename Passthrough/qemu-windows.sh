@@ -10,8 +10,13 @@ xrandr \
 --output HDMI-1 --off \
 --output HDMI-2 --mode 1920x1080 --pos 0x0 --rotate normal --primary
 
-# Run the VM
+# Restart conky
+killall conky &> /dev/null
+conky --quiet
+
+# Run the VM, taskset for CPU pinning
 sudo \
+taskset EE \
 qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 -machine pc,accel=kvm,kernel_irqchip=on,mem-merge=off \
 -cpu host,kvm=off -smp sockets=1,cores=3,threads=2 -m 8G \
@@ -33,6 +38,10 @@ qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 xrandr \
 --output HDMI-1 --mode 2560x1440 --pos 0x0 --rotate normal --primary \
 --output HDMI-2 --off
+
+# Restart conky
+killall conky &> /dev/null
+conky --quiet
 
 echo "Virtual machine stopped"
 exit 0
