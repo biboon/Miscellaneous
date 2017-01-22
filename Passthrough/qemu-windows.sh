@@ -6,12 +6,10 @@ OVMF=/usr/share/ovmf/x64/ovmf_code_x64.bin
 OVMF_VARS=/usr/share/ovmf/x64/ovmf_vars_x64.bin
 
 # Disable primary screen and set the second screen primary
-xrandr \
---output HDMI-1 --off \
---output HDMI-2 --mode 1920x1080 --pos 0x0 --rotate normal --primary
-
-# Restart conky
 killall conky &> /dev/null
+xrandr \
+--output HDMI1 --off \
+--output HDMI2 --mode 1920x1080 --pos 0x0 --rotate normal --primary
 conky --quiet
 
 # Run the VM, taskset for CPU pinning
@@ -27,7 +25,7 @@ qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 -drive if=pflash,format=raw,readonly,file=$OVMF \
 -drive if=pflash,format=raw,file=$OVMF_VARS \
 -usbdevice host:2516:0011 \
--usbdevice host:1e7d:2d50 \
+-usbdevice host:1038:1361 \
 -vga none -nographic -soundhw hda \
 \
 -nodefaults -serial none -parallel none \
@@ -35,12 +33,10 @@ qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 -localtime -k fr
 
 # Restore first screen as primary and the second screen as secondary
-xrandr \
---output HDMI-1 --mode 2560x1440 --pos 0x0 --rotate normal --primary \
---output HDMI-2 --off
-
-# Restart conky
 killall conky &> /dev/null
+xrandr \
+--output HDMI1 --mode 2560x1440 --pos 0x0 --rotate normal --primary \
+--output HDMI2 --off
 conky --quiet
 
 echo "Virtual machine stopped"
