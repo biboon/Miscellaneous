@@ -29,7 +29,7 @@ conky.config = {
 	pad_percents = 2,
 	short_units = false,
 	stippled_borders = 0,
-	update_interval = 3,
+	update_interval = 5,
 	uppercase = false,
 	use_xft = true,
 	use_spacer = 'left',
@@ -54,10 +54,10 @@ Down${alignr}${downspeedf enp0s31f6}kiB/s
 Up${alignr}${upspeedf enp0s31f6}kiB/s
 $color
 ${font DejaVu Sans Mono:size=10:bold}Drives ${font}${hr}
-${color grey} / ${color grey}${alignr}${fs_used /} /${fs_size /}
-$color ${fs_bar 4 /}
-${color grey} /home ${color grey}${alignr}${fs_used /home} /${fs_size /home}
-$color ${fs_bar 4 /home}
+${color grey}/ ${color grey}${alignr}${fs_used /} /${fs_size /}
+$color ${fs_used_perc /}% ${fs_bar 4 /}
+${color grey}/home ${color grey}${alignr}${fs_used /home} /${fs_size /home}
+$color ${fs_used_perc /home}% ${fs_bar 4 /home}
 
 ${font DejaVu Sans Mono:size=10:bold}Processes ${font}${hr}
  Name               CPU%  MEM%
