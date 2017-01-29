@@ -1,69 +1,68 @@
-conky.config = {
-	alignment = 'top_right',
-	background = true,
-	border_outer_margin = 5,
-	border_width = 1,
-	cpu_avg_samples = 2,
-	default_color = white,
-	default_outline_color = '#555',
-	default_shade_color = 'black',
-	draw_borders = false,
-	draw_graph_borders = true,
-	draw_outline = true,
-	draw_shades = true,
-	double_buffer = true,
-	extra_newline = false,
-	font = 'DejaVu Sans Mono:size=10',
-	gap_x = 12,
-	gap_y = 40,
-	no_buffers = true,
-	net_avg_samples = 2,
-	out_to_console = false,
-	out_to_stderr = false,
-	own_window = true,
-	own_window_argb_visual = true,
-	own_window_class = 'Conky',
-	own_window_transparent = true,
-	own_window_type = 'desktop',
-	own_window_hints = 'below',
-	pad_percents = 2,
-	short_units = false,
-	stippled_borders = 0,
-	update_interval = 5,
-	uppercase = false,
-	use_xft = true,
-	use_spacer = 'left',
-	show_graph_scale = false,
-	show_graph_range = false,
+conky.config={
+
+-- Generic settings
+background=true,
+update_interval=3,
+double_buffer=true,
+no_buffers=true,
+
+draw_shades=false,
+draw_outline=false,
+draw_borders=false,
+draw_graph_borders=true,
+
+-- Window specifications
+alignment="top_right",
+gap_x=16,
+gap_y=48,
+minimum_width=240,
+own_window=true,
+own_window_type="desktop",
+--own_window_class="Conky",
+--own_window_colour="EEEEEE",
+own_window_transparent=true,
+own_window_argb_visual=true,
+border_inner_margin=0,
+border_outer_margin=0,
+
+-- Text settings
+use_xft=true,
+font="Monospace:size=10",
+short_units=true,
+pad_percents=2,
+
+-- Colors
+color1="3A3A3A",
+color2="F42828",
+color3="9E9E9E",
+color4="BDBDBD",
+
+border_width=1,
+default_outline_color="#555",
+extra_newline=false,
+out_to_console=false,
+out_to_stderr=false,
+stippled_borders=0,
+uppercase=false,
+use_spacer="left",
+show_graph_scale=false,
+show_graph_range=false
 }
 
-conky.text = [[
-${font DejaVu Sans Mono:size=10:bold}System ${font}${hr}
-${color grey}CPU${alignr}${freq_g 1} ${freq_g 2} ${freq_g 3} ${freq_g 4} GHz
-${alignr}${freq_g 5} ${freq_g 6} ${freq_g 7} ${freq_g 8} GHz
-${alignr}${hwmon 1 temp 2}  ${hwmon 1 temp 3}  ${hwmon 1 temp 4}  ${hwmon 1 temp 5} °C 
-$color $cpu% ${cpubar 4}
-${color grey}RAM${alignr}$mem / $memmax
-$color $memperc% ${membar 4}
-${color grey}Swap${alignr}$swap / $swapmax
-$color $swapperc% ${swapbar 4}
+conky.text=[[
+${color1}System ${hr}
+${color2}Cpu${goto 50}${color1}${cpubar 4,150}${alignr}${color3}${cpu}%
+${color2}Mem${goto 50}${color1}${membar 4,150}${alignr}${color3}${memperc}%
+${color2}Swap${goto 50}${color1}${swapbar 4,150}${alignr}${color3}${swapperc}%
 
-${font DejaVu Sans Mono:size=10:bold}Network ${font}${hr}
-${color grey}Address${alignr}${addr enp0s31f6}
-Down${alignr}${downspeedf enp0s31f6}kiB/s
-Up${alignr}${upspeedf enp0s31f6}kiB/s
-$color
-${font DejaVu Sans Mono:size=10:bold}Drives ${font}${hr}
-${color grey}/ ${color grey}${alignr}${fs_used /} /${fs_size /}
-$color ${fs_used_perc /}% ${fs_bar 4 /}
-${color grey}/home ${color grey}${alignr}${fs_used /home} /${fs_size /home}
-$color ${fs_used_perc /home}% ${fs_bar 4 /home}
+${color1}Network ${hr}
+${color2}Up ${goto 40}${color1}${upspeed enp0s31f6}${goto 120}${color2}Down ${goto 200}${color1}${downspeed enp0s31f6}
+${color2}Sent ${goto 40}${color1}${totalup enp0s31f6}${goto 120}${color2}Received ${goto 200}${color1}${totaldown enp0s31f6}
 
-${font DejaVu Sans Mono:size=10:bold}Processes ${font}${hr}
- Name               CPU%  MEM%
-${color #eee} ${top name 1} ${top cpu 1}${top mem 1}
-${color #ddd} ${top name 2} ${top cpu 2}${top mem 2}
-${color #ccc} ${top name 3} ${top cpu 3}${top mem 3}
-${color #bbb} ${top name 4} ${top cpu 4}${top mem 4}
-${color #aaa} ${top name 5} ${top cpu 5}${top mem 5}
+${color1}Processes ${hr}
+${color2}${top name 1}${color1}${alignc}${top cpu 1}${alignr}${top mem 1}
+${color2}${top name 2}${color1}${alignc}${top cpu 2}${alignr}${top mem 2}
+${color2}${top name 3}${color1}${alignc}${top cpu 3}${alignr}${top mem 3}
+${color2}${top name 4}${color1}${alignc}${top cpu 4}${alignr}${top mem 4}
+${color2}${top name 5}${color1}${alignc}${top cpu 5}${alignr}${top mem 5}
 ]]
