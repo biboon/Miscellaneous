@@ -1,4 +1,10 @@
 #!/bin/bash
+if [ `ps aux | grep qemu-system-x86_64 | wc -l` -gt 1 ]
+then
+    echo "An instance of qemu-system-x86_64 is already running... Aborting"
+    exit 1
+fi
+
 echo "Starting virtual machine"
 export QEMU_AUDIO_DRV=alsa
 QEMU_HDD=/dev/disk/by-id/ata-SSD9SC120GEDA_PNY1210A00013166
