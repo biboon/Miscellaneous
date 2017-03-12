@@ -12,11 +12,9 @@ OVMF=/usr/share/ovmf/x64/ovmf_code_x64.bin
 OVMF_VARS=/usr/share/ovmf/x64/ovmf_vars_x64.bin
 
 # Disable primary screen and set the second screen primary
-killall conky &> /dev/null
 xrandr \
---output HDMI-1 --off \
---output HDMI-2 --mode 1920x1080 --pos 0x0 --rotate normal --primary
-conky --quiet
+--output HDMI1 --off \
+--output HDMI2 --mode 1920x1080 --pos 0x0 --rotate normal --primary
 
 # Run the VM, taskset for CPU pinning
 sudo \
@@ -39,11 +37,9 @@ qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 -localtime -k fr
 
 # Restore first screen as primary and the second screen as secondary
-killall conky &> /dev/null
 xrandr \
---output HDMI-1 --mode 2560x1440 --pos 0x0 --rotate normal --primary \
---output HDMI-2 --off
-conky --quiet
+--output HDMI1 --mode 2560x1440 --pos 0x0 --rotate normal --primary \
+--output HDMI2 --off
 
 echo "Virtual machine stopped"
 exit 0
