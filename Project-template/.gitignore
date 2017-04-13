@@ -1,0 +1,7 @@
+# Ignore compiled files
+bin
+build
+lib/*
+!lib/Makefile
+!lib/src
+!lib/include
