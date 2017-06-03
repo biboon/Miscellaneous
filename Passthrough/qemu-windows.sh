@@ -1,8 +1,9 @@
 #!/bin/bash
 if [ `ps aux | grep qemu-system-x86_64 | wc -l` -gt 1 ]
 then
-    echo "An instance of qemu-system-x86_64 is already running... Aborting"
-    exit 1
+    read -p "An instance of qemu-system-x86_64 is already running. Continue ? [Y/n] " -n 1 -r
+    echo
+    [[ ! $REPLY =~ ^[Yy\n]$ ]] || exit 1
 fi
 
 echo "Starting virtual machine"
