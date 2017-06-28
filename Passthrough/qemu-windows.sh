@@ -1,4 +1,6 @@
 #!/bin/bash
+[ "$EUID" -eq 0 ] || { echo "Must be root"; exit 1; }
+
 if [ `ps aux | grep qemu-system-x86_64 | wc -l` -gt 1 ]
 then
     read -p "An instance of qemu-system-x86_64 is already running. Continue ? [Y/n] " -n 1 -r
@@ -9,16 +11,15 @@ fi
 echo "Starting virtual machine"
 export QEMU_AUDIO_DRV=alsa
 QEMU_HDD=/dev/disk/by-id/ata-SSD9SC120GEDA_PNY1210A00013166
-OVMF=/usr/share/ovmf/x64/ovmf_code_x64.bin
-OVMF_VARS=/usr/share/ovmf/x64/ovmf_vars_x64.bin
+OVMF=/usr/share/OVMF/OVMF_CODE.fd
+OVMF_VARS=/usr/share/OVMF/OVMF_VARS.fd
 
 # Disable primary screen and set the second screen primary
 xrandr \
---output HDMI1 --off \
---output HDMI2 --mode 1920x1080 --pos 0x0 --rotate normal --primary
+--output HDMI-1 --off \
+--output HDMI-2 --mode 1920x1080 --pos 0x0 --rotate normal --primary
 
 # Run the VM, taskset for CPU pinning
-sudo \
 taskset EE \
 qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 -machine pc,accel=kvm,kernel_irqchip=on,mem-merge=off \
@@ -31,7 +32,7 @@ qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 -drive if=pflash,format=raw,file=$OVMF_VARS \
 -usbdevice host:2516:0011 \
 -usbdevice host:1038:1361 \
--vga none -nographic -soundhw hda \
+-vga none -nographic -soundhw ac97 \
 \
 -nodefaults -serial none -parallel none \
 -nodefconfig -no-user-config \
@@ -39,8 +40,9 @@ qemu-system-x86_64 -enable-kvm -name windows -boot order=c \
 
 # Restore first screen as primary and the second screen as secondary
 xrandr \
---output HDMI1 --mode 2560x1440 --pos 0x0 --rotate normal --primary \
---output HDMI2 --off
+--output HDMI-1 --mode 2560x1440 --pos 0x0 --rotate normal --primary \
+--output HDMI-2 --off
 
 echo "Virtual machine stopped"
 exit 0
+
