@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Windows 10 VM
-Comment=Start Qemu Windows VM
-Exec=/home/biboon/Documents/Projects/Miscellaneous/Passthrough/qemu-windows.sh
-Icon=/home/biboon/Documents/Projects/Miscellaneous/Passthrough/windows-10-icon.png
-Terminal=true
-Type=Application
-Categories=Productivity
